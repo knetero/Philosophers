@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:01 by abazerou          #+#    #+#             */
-/*   Updated: 2023/06/26 10:35:09 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:05:38 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,17 @@ typedef struct t_param
 typedef struct t_philo
 {
     int id;
-    long last_meal_time;
     int meals_n;
-    long time_since_last_meal;
     int is_dead;
+    long last_meal_time;
+    long time_since_last_meal;
     pthread_mutex_t fork;
+    pthread_mutex_t death_mutex;
     pthread_t thread;
     struct t_philo *next;
     struct t_param *par;
     struct timeval start_time;
+    long time;
 }t_philo;
 
 

@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/06/26 10:38:28 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:10:37 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,42 +128,44 @@ void	*routine(void *arg)
     philo->is_dead = 0;
     if(id % 2 == 0)
         usleep(200);
-    pthread_mutex_t mutex;
-    pthread_mutex_init(&mutex, NULL);
     gettimeofday(&philo->start_time, NULL);
-    long start_time = philo->start_time.tv_sec * 1000 + philo->start_time.tv_usec / 1000;
-	while (1)
+    philo->time = philo->start_time.tv_sec * 1000 + philo->start_time.tv_usec / 1000;
+	while (philo->is_dead != 1)
 	{
         pthread_mutex_lock(&(philo->fork));
-        printf("[%ldms] Philo %d picked up the left fork.\n", get_time() - start_time, id);
+        printf("[%ldms] Philo %d picked up the left fork.\n", get_time() - philo->time, id);
         pthread_mutex_lock(&(philo->next->fork));
-        printf("[%ldms] Philo %d picked up the right fork.\n", get_time() - start_time, id);
+        printf("[%ldms] Philo %d picked up the right fork.\n", get_time() - philo->time, id);
         philo->last_meal_time = get_time();
-        printf("[%ldms] Philo %d is eating.\n", get_time() - start_time, id);
-        // philo->meals_n++;
+        printf("[%ldms] Philo %d is eating.\n", get_time() - philo->time, id);
         ft_usleep(philo->par->time_to_eat);
         pthread_mutex_unlock(&(philo->fork));
         pthread_mutex_unlock(&(philo->next->fork));
-        printf("[%ldms] Philo %d is sleeping.\n", get_time() - start_time, id);
+        printf("[%ldms] Philo %d is sleeping.\n", get_time() - philo->time, id);
         ft_usleep(philo->par->time_to_sleep);
-        printf("[%ldms] Philo %d is thinking.\n", get_time() - start_time, id);
-        pthread_mutex_lock(&mutex);
-        // if (!(philo->is_dead))
-        // {
-        //     long current_time = get_time();
-        //     philo->time_since_last_meal = current_time - philo->last_meal_time / 1000;
-
-        //     if (philo->time_since_last_meal > philo->par->time_to_die)
-        //     {
-        //         printf("[%ldms] Philo %d is dead.\n", get_time() - start_time, id);
-        //         philo->is_dead = 1;
-        //         pthread_mutex_unlock(&mutex);
-        //         break;
-        //     }
-        // }
-        pthread_mutex_unlock(&mutex);
+        printf("[%ldms] Philo %d is thinking.\n", get_time() - philo->time, id);
 	}
 	return (NULL);
+}
+
+void    check_death(t_philo *philo)
+{
+    pthread_mutex_init(&philo->death_mutex, NULL);
+    long current_time = get_time();
+    philo->time_since_last_meal = current_time - philo->last_meal_time / 1000;
+    while(1)
+    {
+        pthread_mutex_lock(&philo->death_mutex);
+        if (philo->time_since_last_meal > philo->par->time_to_die)
+        {
+            philo->is_dead = 1;
+            printf("[%ldms] Philo %d is dead.\n", get_time() - philo->time, philo->id);
+            pthread_mutex_unlock(&philo->death_mutex);
+            break;
+        }
+        philo = philo->next;
+        usleep(200);
+    }
 }
 
 int main(int ac, char **av) 
@@ -184,12 +186,14 @@ int main(int ac, char **av)
             i++;
         }
         i = 1;
-        while (i < par.philo_num) 
+        while(i <= par.philo_num)
         {
-            if (pthread_join(philo->thread, NULL) != 0)
-                ft_puterror("[Error]:!\n");
+            if(pthread_detach(philo->thread) != 0)
+                ft_puterror("error\n");
+            philo = philo->next;
             i++;
         }
+        check_death(philo);
     }
     else 
         ft_puterror("[Error]: check your args!\n");
