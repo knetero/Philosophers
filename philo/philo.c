@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/06/26 18:10:37 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/06/26 19:50:07 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,9 @@ void	*routine(void *arg)
         printf("[%ldms] Philo %d picked up the left fork.\n", get_time() - philo->time, id);
         pthread_mutex_lock(&(philo->next->fork));
         printf("[%ldms] Philo %d picked up the right fork.\n", get_time() - philo->time, id);
+        pthread_mutex_lock(&philo->mutex);
         philo->last_meal_time = get_time();
+        pthread_mutex_unlock(&philo->mutex);
         printf("[%ldms] Philo %d is eating.\n", get_time() - philo->time, id);
         ft_usleep(philo->par->time_to_eat);
         pthread_mutex_unlock(&(philo->fork));
@@ -151,8 +153,10 @@ void	*routine(void *arg)
 void    check_death(t_philo *philo)
 {
     pthread_mutex_init(&philo->death_mutex, NULL);
-    long current_time = get_time();
-    philo->time_since_last_meal = current_time - philo->last_meal_time / 1000;
+    long long current_time = get_time();
+    pthread_mutex_lock(&philo->mutex);
+    philo->time_since_last_meal = (current_time - philo->last_meal_time) / 1000;
+    pthread_mutex_unlock(&philo->mutex);
     while(1)
     {
         pthread_mutex_lock(&philo->death_mutex);
@@ -177,8 +181,9 @@ int main(int ac, char **av)
         check_values(av, ac);
         param_init(av, ac, &par);
         philo = ft_make_philo(&par);
+        pthread_mutex_init(&philo->mutex, NULL);
         int i = 1;
-        while (i <= par.philo_num) 
+        while (i <= par.philo_num)
         {
             if (pthread_create(&philo->thread, NULL, &routine, philo) != 0)
                 ft_puterror("[Error]: failed to create thread!\n");
