@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:01 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/03 22:20:45 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:47:49 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
 int					check_death(t_philo *philo, int ac);
 int					check_eat(t_philo *philo, int eat);
-int					start_threads(t_param *par, t_philo *philo, int ac);
+void				start_threads(t_param *par, t_philo *philo, int ac);
 int					check_death_2(t_philo *p, int i);
 void				ft_puterror(char *s);
 void				ft_putstr_fd(char *s, int fd);

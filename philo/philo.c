@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/04 14:29:15 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:59:24 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	ft_destroy(t_philo *philo)
 	int		i;
 
 	i = 1;
+	pthread_mutex_unlock(&philo->data->print_mutex);
 	if (pthread_mutex_destroy(&philo->data->print_mutex) != 0)
 		ft_puterror("error_mutex_print\n");
 	current = philo;
 	while (i <= philo->par->philo_num)
 	{
 		next = current->next;
+		pthread_mutex_unlock(&current->fork);
 		if (pthread_mutex_destroy(&current->fork) != 0)
 			printf("error_mutex_fork %d\n", i);
 		free(current);
@@ -61,8 +63,7 @@ int	main(int ac, char **av)
 		check_values(av, ac);
 		param_init(av, ac, &par);
 		philo = ft_make_philo(&par, &data);
-		if (start_threads(&par, philo, ac) == 0)
-			return (0);
+		start_threads(&par, philo, ac);
 		ft_destroy(philo);
 	}
 	else

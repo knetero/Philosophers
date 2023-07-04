@@ -6,11 +6,18 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/03 21:13:14 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:09:08 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	print_ac(char *s, int id, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%ld %d %s", get_time(philo->data->time), id, s);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+}
 
 void	ft_puterror(char *s)
 {
@@ -57,11 +64,4 @@ int	ft_atoi(const char *str)
 	if (!ft_isdigit(str[i]) && str[i])
 		ft_puterror("[Error]:the arg is not digit!\n");
 	return (result);
-}
-
-void	print_ac(char *s, int id, t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("%ld %d %s", get_time(philo->data->time), id, s);
-	pthread_mutex_unlock(&philo->data->print_mutex);
 }

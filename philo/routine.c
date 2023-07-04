@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:51:30 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/04 16:42:37 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:06:25 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int	start_threads(t_param *par, t_philo *philo, int ac)
+void	start_threads(t_param *par, t_philo *philo, int ac)
 {
 	int	i;
 
@@ -121,8 +121,7 @@ int	start_threads(t_param *par, t_philo *philo, int ac)
 	}
 	while (1)
 	{
-		if (check_death(philo, ac))
-			return (0);
+		check_death(philo, ac);
+		break ;
 	}
-	return (0);
 }
