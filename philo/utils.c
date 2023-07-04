@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/06/19 17:50:08 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/03 21:13:14 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,28 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-// void	ft_lstadd_front(t_philo **lst, t_philo *new)
-// {
-// 	if (!lst || !new)
-// 		return ;
-// 	new->next = *lst;
-// 	*lst = new;
-// }
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	result;
 
-// t_philo	*ft_lstnew(int *content)
-// {
-// 	t_philo	*new;
+	result = 0;
+	i = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	if (!ft_isdigit(str[i]) && str[i])
+		ft_puterror("[Error]:the arg is not digit!\n");
+	return (result);
+}
 
-// 	new = malloc(sizeof(t_philo));
-// 	if (!new)
-// 		return (NULL);
-// 	new->id = content;
-// 	new->next = NULL;
-// 	return (new);
-// }
-
-// int	ft_lstadd_front(t_philo **alst, t_philo *new)
-// {
-// 	if (new)
-// 	{
-// 		new->next = *alst;
-// 		*alst = new;
-// 		new = NULL;
-// 	}
-// }
+void	print_ac(char *s, int id, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%ld %d %s", get_time(philo->data->time), id, s);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+}
