@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:14:17 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/03 20:44:22 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:24:25 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_usleep(time_t time)
 	gettimeofday(&start_time, NULL);
 	current_time = start_time.tv_sec * 1000 + start_time.tv_usec / 1000;
 	while ((get_time(current_time)) < time)
-		usleep(50);
+		usleep(80);
 }
 
 time_t	get_time(time_t start_time)

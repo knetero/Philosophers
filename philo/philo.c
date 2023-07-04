@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/03 19:19:53 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:29:15 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	check_values(char **av, int ac)
 {
-	if (ft_atoi(av[1]) < 1)
-		ft_puterror("[Error]: must be at least one philo!\n");
-	else if (ft_atoi(av[2]) <= 0)
-		ft_puterror("[Error]: time to die must be greater than 0!\n");
-	else if (ft_atoi(av[3]) <= 0)
-		ft_puterror("[Error]: time to eat must be greater than 0!\n");
-	else if (ft_atoi(av[4]) <= 0)
-		ft_puterror("[Error]: time to sleep must be greater than 0!\n");
+	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200)
+		ft_puterror("[Error]: Number of philosophers is not valid!\n");
+	else if (ft_atoi(av[2]) < 60)
+		ft_puterror("[Error]: time to die not valid!\n");
+	else if (ft_atoi(av[3]) < 60)
+		ft_puterror("[Error]: time to eat not valid!\n");
+	else if (ft_atoi(av[4]) < 60)
+		ft_puterror("[Error]: time to sleep not valid!\n");
 	else if (ac == 6)
 	{
 		if (ft_atoi(av[5]) <= 0)
