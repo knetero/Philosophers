@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:51:30 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/04 18:06:25 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:57:56 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_death_2(t_philo *p, int i)
 		{
 			pthread_mutex_lock(&p->data->print_mutex);
 			printf("%ld %d is dead.\n", get_time(p->data->time), p->id);
-			return (usleep(1000), 1);
+			return (usleep(2000), 1);
 		}
 		pthread_mutex_unlock(&p->data->death_mutex);
 		p = p->next;

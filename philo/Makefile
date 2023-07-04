@@ -6,12 +6,12 @@
 #    By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/25 16:49:45 by abazerou          #+#    #+#              #
-#    Updated: 2023/07/04 17:34:02 by abazerou         ###   ########.fr        #
+#    Updated: 2023/07/04 18:30:58 by abazerou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc -g
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread 
 
 SRC = philo.c utils.c param_init.c time.c routine.c
 OBJ = $(SRC:.c=.o)
