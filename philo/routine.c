@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:51:30 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/05 15:05:30 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:55:28 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_death_2(t_philo *p, int i)
 		{
 			pthread_mutex_lock(&p->data->print_mutex);
 			printf("%ld %d is dead.\n", get_time(p->data->time), p->id);
-			return (usleep(2000), 1);
+			return (usleep(500), 1);
 		}
 		pthread_mutex_unlock(&p->data->death_mutex);
 		p = p->next;
@@ -66,7 +66,7 @@ int	check_death(t_philo *p, int ac)
 		i = 0;
 		if (check_death_2(p, i) == 1)
 			return (1);
-		usleep(200);
+		usleep(100);
 	}
 	return (0);
 }
@@ -84,11 +84,11 @@ void	*routine(void *arg)
 		print_ac("has taken a fork \n", philo->id, philo);
 		pthread_mutex_lock(&(philo->next->fork));
 		print_ac("has taken a fork\n", philo->id, philo);
-		print_ac("is eating\n", philo->id, philo);
 		pthread_mutex_lock(&philo->data->death_mutex);
 		philo->last_meal_t = get_time(philo->data->time);
 		philo->meals_n++;
 		pthread_mutex_unlock(&philo->data->death_mutex);
+		print_ac("is eating\n", philo->id, philo);
 		ft_usleep(philo->par->time_to_eat);
 		pthread_mutex_unlock(&(philo->next->fork));
 		pthread_mutex_unlock(&(philo->fork));
