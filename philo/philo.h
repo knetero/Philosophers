@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:01 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/04 17:47:49 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:20:59 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct t_philo
 typedef struct t_data
 {
 	time_t			time;
+	int				dead;
 	struct timeval	start_time;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
@@ -55,11 +56,10 @@ int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
 int					check_death(t_philo *philo, int ac);
 int					check_eat(t_philo *philo, int eat);
-void				start_threads(t_param *par, t_philo *philo, int ac);
+int					start_threads(t_param *par, t_philo *philo, int ac);
 int					check_death_2(t_philo *p, int i);
-void				ft_puterror(char *s);
 void				ft_putstr_fd(char *s, int fd);
-void				check_values(char **av, int ac);
+int					check_values(char **av, int ac);
 void				ft_usleep(time_t time);
 void				param_init(char **av, int ac, t_param *table);
 void				*routine(void *arg);

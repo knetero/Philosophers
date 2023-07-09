@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:51:30 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/08 14:55:28 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:03:26 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ int	check_death_2(t_philo *p, int i)
 		pthread_mutex_lock(&p->data->death_mutex);
 		if (get_time(p->data->time) - p->last_meal_t >= p->par->time_to_die)
 		{
+			p->data->dead = 0;
 			pthread_mutex_lock(&p->data->print_mutex);
 			printf("%ld %d is dead.\n", get_time(p->data->time), p->id);
-			return (usleep(500), 1);
+			return (usleep(2000), 1);
 		}
 		pthread_mutex_unlock(&p->data->death_mutex);
 		p = p->next;
@@ -78,7 +79,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(200);
-	while (1)
+	while (philo->data->dead)
 	{
 		pthread_mutex_lock(&(philo->fork));
 		print_ac("has taken a fork \n", philo->id, philo);
@@ -99,7 +100,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-void	start_threads(t_param *par, t_philo *philo, int ac)
+int	start_threads(t_param *par, t_philo *philo, int ac)
 {
 	int	i;
 
@@ -107,7 +108,7 @@ void	start_threads(t_param *par, t_philo *philo, int ac)
 	while (i <= par->philo_num)
 	{
 		if (pthread_create(&philo->thread, NULL, &routine, philo) != 0)
-			ft_puterror("[Error]: failed to create thread!\n");
+			return(printf("[Error]: failed to create thread!\n"), -1);
 		philo = philo->next;
 		i++;
 	}
@@ -115,13 +116,10 @@ void	start_threads(t_param *par, t_philo *philo, int ac)
 	while (i <= par->philo_num)
 	{
 		if (pthread_detach(philo->thread) != 0)
-			ft_puterror("error\n");
+			return(printf("[Error]: failed to detach\n"), -1);
 		philo = philo->next;
 		i++;
 	}
-	while (1)
-	{
-		check_death(philo, ac);
-		break ;
-	}
+	check_death(philo, ac);
+	return(0);
 }

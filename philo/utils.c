@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/04 17:09:08 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:02:15 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,13 @@
 
 void	print_ac(char *s, int id, t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("%ld %d %s", get_time(philo->data->time), id, s);
-	pthread_mutex_unlock(&philo->data->print_mutex);
-}
-
-void	ft_puterror(char *s)
-{
-	ft_putstr_fd(s, 1);
-	exit(1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
+	if(philo->data->dead != 0)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		pthread_mutex_lock(&philo->data->print_mutex);
+		printf("%ld %d %s", get_time(philo->data->time), id, s);
+		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
+	return;
 }
 
 int	ft_isdigit(int c)
@@ -62,6 +46,6 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	if (!ft_isdigit(str[i]) && str[i])
-		ft_puterror("[Error]:the arg is not digit!\n");
+		return(-1);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:13:17 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/03 19:53:16 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:21:11 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_philo	*ft_make_philo(t_param *p, t_data *data)
 	head = NULL;
 	top = NULL;
 	data->time = start_time(data);
+	data->dead = 1;
 	while (i <= p->philo_num)
 	{
 		new_philo = create_philo(p, data, i);
