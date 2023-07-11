@@ -6,12 +6,12 @@
 #    By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/25 16:49:45 by abazerou          #+#    #+#              #
-#    Updated: 2023/07/05 11:04:48 by abazerou         ###   ########.fr        #
+#    Updated: 2023/07/11 20:14:45 by abazerou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread
 
 SRC = philo.c utils.c param_init.c time.c routine.c
 OBJ = $(SRC:.c=.o)

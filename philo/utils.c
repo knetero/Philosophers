@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/09 21:02:15 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/11 22:25:47 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 void	print_ac(char *s, int id, t_philo *philo)
 {
-	if(philo->data->dead != 0)
-	{
-		pthread_mutex_lock(&philo->data->print_mutex);
-		printf("%ld %d %s", get_time(philo->data->time), id, s);
-		pthread_mutex_unlock(&philo->data->print_mutex);
-	}
-	return;
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%ld %d %s", get_time(philo->data->time), id, s);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 int	ft_isdigit(int c)
@@ -46,6 +42,6 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	if (!ft_isdigit(str[i]) && str[i])
-		return(-1);
+		return (-1);
 	return (result);
 }
