@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 19:13:53 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:47:01 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	check_values(char **av, int ac)
 {
-	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200 || ft_atoi(av[1]) == -1)
+	if (ft_atoi(av[1]) == -1)
 		return (printf("[Error]: arg not valid!\n"), -1);
-	else if (ft_atoi(av[2]) < 60 || ft_atoi(av[2]) == -1)
+	else if (ft_atoi(av[2]) == -1)
 		return (printf("[Error]: arg not valid!\n"), -1);
-	else if (ft_atoi(av[3]) < 60 || ft_atoi(av[3]) == -1)
+	else if (ft_atoi(av[3]) == -1)
 		return (printf("[Error]: arg not valid!\n"), -1);
-	else if (ft_atoi(av[4]) < 60 || ft_atoi(av[4]) == -1)
+	else if (ft_atoi(av[4]) == -1)
 		return (printf("[Error]: arg not valid!\n"), -1);
 	else if (ac == 6)
 	{
@@ -62,7 +62,8 @@ int	main(int ac, char **av)
 	{
 		if (check_values(av, ac) == -1)
 			return (1);
-		param_init(av, ac, &par);
+		if (param_init(av, ac, &par) == 1)
+			return(0);
 		philo = ft_make_philo(&par, &data);
 		start_threads(philo);
 		while (1)

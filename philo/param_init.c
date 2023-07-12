@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:13:17 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 16:58:04 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:43:45 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ t_philo	*ft_make_philo(t_param *p, t_data *data)
 	return (head);
 }
 
-void	param_init(char **av, int ac, t_param *table)
+int	param_init(char **av, int ac, t_param *table)
 {
 	table->philo_num = ft_atoi(av[1]);
+	if (table->philo_num == 0)
+		return (1);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	pthread_mutex_init(&table->print_mutex, NULL);
 	if (ac == 6)
 		table->must_eat_num = ft_atoi(av[5]);
+	return (0);
 }
 
 t_philo	*create_philo(t_param *p, t_data *data, int i)

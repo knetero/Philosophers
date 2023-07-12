@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:01 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 17:29:59 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:42:46 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int					start_threads(t_philo *philo);
 void				ft_putstr_fd(char *s, int fd);
 int					check_values(char **av, int ac);
 void				ft_usleep(time_t time);
-void				param_init(char **av, int ac, t_param *table);
+int					param_init(char **av, int ac, t_param *table);
 void				*routine(void *arg);
 void				print_ac(char *s, int id, t_philo *philo);
 void				meals_counter(t_philo *philo);
