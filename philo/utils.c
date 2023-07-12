@@ -6,17 +6,29 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/11 22:25:47 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:54:32 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	meals_counter(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->meals_mutex);
+	philo->meals_n++;
+	pthread_mutex_unlock(&philo->meals_mutex);
+}
+
 void	print_ac(char *s, int id, t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("%ld %d %s", get_time(philo->data->time), id, s);
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->dead_mutex);
+	if (philo->dead == 0)
+	{
+		pthread_mutex_lock(&philo->par->print_mutex);
+		printf("%ld %d %s", get_time(philo->data->time), id, s);
+		pthread_mutex_unlock(&philo->par->print_mutex);
+	}
+	pthread_mutex_unlock(&philo->dead_mutex);
 }
 
 int	ft_isdigit(int c)

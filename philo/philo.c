@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/11 22:43:49 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 17:28:29 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,16 @@ int	ft_destroy(t_philo *philo)
 	int		num;
 	int		i;
 
-	i = 1;
+	i = 0;
 	num = philo->par->philo_num;
-	pthread_mutex_destroy(&philo->data->print_mutex);
-	pthread_mutex_destroy(&philo->data->death_mutex);
-	pthread_mutex_destroy(&philo->data->meals_mutex);
-	pthread_mutex_destroy(&philo->data->last_meal_mutex);
+	pthread_mutex_destroy(&philo->par->print_mutex);
+	while (i < num)
+	{
+		pthread_mutex_destroy(&philo->meals_mutex);
+		pthread_mutex_destroy(&philo->last_meal_mutex);
+		philo = philo->next;
+		i++;
+	}
 	return (0);
 }
 
@@ -61,6 +65,7 @@ int	main(int ac, char **av)
 		{
 			if (check_death(philo, ac) == 1)
 				break ;
+			usleep(200);
 		}
 		ft_destroy(philo);
 	}
