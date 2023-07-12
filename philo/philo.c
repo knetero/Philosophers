@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:12 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 19:47:01 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:31:39 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,22 @@ int	ft_destroy(t_philo *philo)
 	}
 	return (0);
 }
-void ff()
-{
-	system("leaks philo");
-}
 
 int	main(int ac, char **av)
 {
 	t_philo	*philo;
 	t_param	par;
 	t_data	data;
-// atexit(ff);
+
 	if (ac == 5 || ac == 6)
 	{
 		if (check_values(av, ac) == -1)
 			return (1);
 		if (param_init(av, ac, &par) == 1)
-			return(0);
+			return (0);
 		philo = ft_make_philo(&par, &data);
+		if (!philo)
+			return (1);
 		start_threads(philo);
 		while (1)
 		{

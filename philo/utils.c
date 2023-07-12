@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:46:00 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 19:25:13 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:50:48 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_atoi(const char *str)
 
 	result = 0;
 	i = 0;
+	if (ft_strlen(str) == 0)
+		return (-1);
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '+')
@@ -60,4 +62,14 @@ int	ft_atoi(const char *str)
 	if (!ft_isdigit(str[i]) && str[i])
 		return (-1);
 	return (result);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

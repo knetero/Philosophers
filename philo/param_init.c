@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:13:17 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 19:43:45 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:27:44 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_philo	*ft_make_philo(t_param *p, t_data *data)
 	while (i <= p->philo_num)
 	{
 		new_philo = create_philo(p, data, i);
+		if (!new_philo)
+			return (0);
 		if (head == NULL)
 			head = new_philo;
 		else
@@ -57,10 +59,7 @@ t_philo	*create_philo(t_param *p, t_data *data, int i)
 
 	new_philo = malloc(sizeof(t_philo));
 	if (!new_philo)
-	{
-		free(new_philo);
 		return (0);
-	}
 	new_philo->id = i;
 	new_philo->par = p;
 	new_philo->data = data;

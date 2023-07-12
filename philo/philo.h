@@ -6,7 +6,7 @@
 /*   By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 10:36:01 by abazerou          #+#    #+#             */
-/*   Updated: 2023/07/12 19:42:46 by abazerou         ###   ########.fr       */
+/*   Updated: 2023/07/12 21:26:23 by abazerou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,24 @@ typedef struct t_data
 	struct timeval	start_time;
 }t_data;
 
+size_t				ft_strlen(const char *str);
 int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
 int					check_death(t_philo *philo, int ac);
 int					check_eat(t_philo *philo);
 int					start_threads(t_philo *philo);
-void				ft_putstr_fd(char *s, int fd);
 int					check_values(char **av, int ac);
-void				ft_usleep(time_t time);
 int					param_init(char **av, int ac, t_param *table);
+void				ft_usleep(time_t time);
 void				*routine(void *arg);
+void				ft_putstr_fd(char *s, int fd);
 void				print_ac(char *s, int id, t_philo *philo);
 void				meals_counter(t_philo *philo);
 void				philo_dead(t_philo *p);
 void				last_meals_counter(t_philo *philo);
 t_philo				*ft_make_philo(t_param *p, t_data *data);
-time_t				get_time(time_t start_time);
 t_philo				*create_philo(t_param *p, t_data *data, int i);
 time_t				start_time(t_data *data);
+time_t				get_time(time_t start_time);
 
 #endif
