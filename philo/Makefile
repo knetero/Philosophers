@@ -6,12 +6,12 @@
 #    By: abazerou <abazerou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/25 16:49:45 by abazerou          #+#    #+#              #
-#    Updated: 2023/07/12 21:23:27 by abazerou         ###   ########.fr        #
+#    Updated: 2023/07/13 13:56:42 by abazerou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = philo.c utils.c param_init.c time.c routine.c
 OBJ = $(SRC:.c=.o)
@@ -23,6 +23,7 @@ HEADER = philo.h
 red    =   `tput setaf 1`
 green  =   `tput setaf 2`
 yellow =   `tput setaf 3`
+
 
 all: $(NAME)
 
